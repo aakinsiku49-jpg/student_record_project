@@ -1,0 +1,17 @@
+{
+  "name": "student_record_api",
+  "version": "1.0.0",
+  "description": "BTechified Student Record API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "BT_Group2",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
