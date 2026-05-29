@@ -3,7 +3,7 @@ const express  = require('express')
 const app = express();
 
 //declare port using global environment
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000; 
 
 //Middleware in order to accept request from the body
 app.use(express.json());
@@ -22,17 +22,18 @@ app.get('/', (req,res)=>{
     res.send("This is Student Record API")
 })
 
+
 //student records array to store the student records in memory (student attributes)
 let studentsRecords = [
-    {
-        student_id: Date.now() - Math.floor(Math.random() * 1000000),
+    {  
+        studentid: Date.now() - Math.floor(Math.random() * 1000000),
         firstname: "Dharn",
         lastname: "myDharn",
-        email: "dharn@example.com"
+        email: "dharn@example.com",
+        department: "Backend dev"
     }
 ];
-
-console.log(typeof (studentsRecords[0].student_id))
+console.log(typeof (studentsRecords[0].studentid))
 
 //get all students endPoint //By Marvelous Anthony
 app.get('/api/v1/students', (req, res) => {
@@ -43,7 +44,28 @@ app.get('/api/v1/students', (req, res) => {
     });
 });
 
-//create student record endpoint
+//create student record endpoint/Gazo Benjamin Great
+
+app.post('/api/v1/students/create', (req, res)=> {
+    const {firstname, lastname, email, department} = req.body;
+    if(!firstname||!lastname||!email||!department) return res.status(404).json({
+        status: "failed",
+        message: "All fields are required to be filled"
+    })
+    const newStudentRecord = {student_id: Date.now() - Math.floor(Math.random() * 1000000),
+        firstname,
+        lastname,
+        email,
+        department
+    }
+
+    studentsRecords.push(newStudentRecord);
+    res.status(201).json({
+        status: "success",
+        message: "Student is added successfully!!",
+        newStudentRecord
+    })
+})
 
 
 //get student by student_id endpoint //By Adekanye Oluwatosin
@@ -67,7 +89,8 @@ app.get('/api/v1/students/:student_id', (req, res) => {
 //update student record endpoint
 
 
-//delete student record endpoint
+
+//delete student record endpoint //By Rose Mary
 app.delete('/api/v1/student/:id', (req, res) =>{
 
     //get student id from request
@@ -81,8 +104,8 @@ app.delete('/api/v1/student/:id', (req, res) =>{
         return res.status(404).json({
             success: false,
             message: "Student not found"
-        })
-    }
+        });
+    };
 
     //remove student from the array
     studentsRecords.filter(
@@ -94,10 +117,8 @@ app.delete('/api/v1/student/:id', (req, res) =>{
         success: true,
         message: "Student deleted successfully",
         deletedStudent: studentExistence
-    })
-})
-
-
+    });
+});
 
 //listen
 app.listen(PORT, ()=> {
