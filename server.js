@@ -111,8 +111,17 @@ app.patch("/api/v1/student/:id", (req, res) => {
     });
   }
 
-  // validate request body to ensure it contains at least one field to update
-  // validate that the fields being updated are Not existing student records
+
+// Validate request body: ensure all provided fields have non-empty values before applying updates to the student record
+for (const item in req.body) {
+    if (!req.body[item]) {
+      return res.status(400).json({
+        status: "failed",
+        message: `${item} cannot be empty`,
+      });
+    }
+  }
+    
 
   // update student record with new data from request body
   delete req.body.studentid;
