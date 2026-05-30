@@ -108,7 +108,10 @@ app.patch("/api/v1/student/:id", (req, res) => {
 
   // update student record with new data from request body
   Object.assign(student, req.body);
-  res.status(200).json([student]);
+  res.status(200).json({
+    status: "success",
+    data: student,
+  });
 });
 
 //delete student record endpoint //By Rose Mary
