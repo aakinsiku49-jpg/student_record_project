@@ -66,6 +66,22 @@ app.post("/api/v1/students/create", (req, res) => {
   });
 });
 
+//get student by student_id endpoint/Abosede Akinsiku
+
+app.get('/students/:id', (req, res) => {
+  const student = students.find(
+    s => s.id === parseInt(req.params.id)
+  );
+
+  if (!student) {
+    return res.status(404).json({
+      message: 'Student not found'
+    });
+  }
+
+  res.json(student);
+});
+
 //get student by student_id endpoint //By Adekanye Oluwatosin
 
 app.get("/api/v1/students/:student_id", (req, res) => {
@@ -110,7 +126,6 @@ app.patch("/api/v1/student/:id", (req, res) => {
       message: "No fields provided for update",
     });
   }
-
 
 // Validate request body: ensure all provided fields have non-empty values before applying updates to the student record
 for (const item in req.body) {
